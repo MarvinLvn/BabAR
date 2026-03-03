@@ -1,0 +1,26 @@
+[project]
+name = "BabAR"
+version = "1.0"
+description = "BabAR version 1.0 (Interspeech release)"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    # VTC
+    "pyannote-audio>=3.4.0",
+    "segma",
+    "tqdm>=4.67.1",
+    # BabAR inference
+    "torch>=2.8.0",
+    "torchaudio>=2.8.0",
+    "transformers>=4.45.0",
+    "pytorch-lightning>=2.4.0",
+    "soundfile>=0.12.1",
+    "numpy>=1.24.0,<2.3.0",
+    "pandas>=2.2.0",
+    "datasets>=3.1.0",
+    # Shared
+    "polars>=1.0.0",
+]
+
+[tool.uv.sources]
+segma = { git = "https://github.com/arxaqapi/segma", rev = "ea8a54be363ef3ce15e00a7252eb637dcfaac495" }
