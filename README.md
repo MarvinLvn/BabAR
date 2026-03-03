@@ -9,18 +9,15 @@ The key-child's utterances are further enriched with their phonetic transcriptio
 ## Installation
 
 First, make sure that [uv](https://docs.astral.sh/uv/), [ffmpeg](https://ffmpeg.org/), and [git-lfs](https://git-lfs.com/) are installed on your system.
-You can check that they are by running:
-
-```sh
-./check_sys_dependencies.sh
-```
-
 You can then clone the repository:
 
 ```sh
 # Clone repository
 git-lfs install
 git clone --recurse-submodules https://github.com/MarvinLvn/BabAR.git
+
+# Check all three dependencies listed above using
+./check_sys_dependencies.sh
 
 # Get VTC2.0 and BabAR's weights
 cd BabAR

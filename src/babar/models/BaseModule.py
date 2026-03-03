@@ -18,6 +18,14 @@ class BaseModule(LightningModule):
         super(BaseModule, self).__init__()
         self.save_hyperparameters()
 
+        # Handle clean checkpoints where params are dicts instead of dataclasses
+        if isinstance(network_param, dict):
+            from types import SimpleNamespace
+            network_param = SimpleNamespace(**network_param)
+        if isinstance(optim_param, dict):
+            from types import SimpleNamespace
+            optim_param = SimpleNamespace(**optim_param)
+
         # Tokenizer
         if vocab_phoneme_path is not None:
             network_param.vocab_file = vocab_phoneme_path

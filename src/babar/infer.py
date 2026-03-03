@@ -39,8 +39,10 @@ def load_model(
     model = BaseModule.load_from_checkpoint(
         str(checkpoint_path),
         vocab_phoneme_path=vocab_phoneme_path,
+        weights_only=False,
     )
     model.eval()
+    model.half()
     return model
 
 
@@ -56,7 +58,7 @@ def predict_batch(model: BaseModule, batch: dict, device: str) -> list[str]:
         List of predicted phoneme sequences (one string per utterance).
     """
     with torch.no_grad():
-        batch["array"] = batch["array"].to(device)
+        batch["array"] = batch["array"].to(device, dtype=next(model.parameters()).dtype)
 
         hidden_states, input_lengths, is_valid_mask = model.get_hidden_states(batch)
         logits = model.get_logits(hidden_states)
@@ -76,6 +78,7 @@ def run_single(
     batch_size: int = 32,
     num_workers: int = 4,
     speaker_filter: str = "KCHI",
+    max_utt_dur: int = None,
 ) -> Optional[pd.DataFrame]:
     """Run BabAR inference on a single (audio, rttm) pair.
 
@@ -88,6 +91,7 @@ def run_single(
         batch_size: Batch size.
         num_workers: Dataloader workers.
         speaker_filter: Speaker label to extract from RTTM.
+        max_utt_dur: Maximum duration in seconds (all utterances longer than max_utt_dur won't be passed to BabAR).
 
     Returns:
         DataFrame with columns [filename, onset, offset, speaker, phonemes],
@@ -100,6 +104,7 @@ def run_single(
         batch_size=batch_size,
         num_workers=num_workers,
         speaker_filter=speaker_filter,
+        max_utt_dur=max_utt_dur,
     )
     datamodule.set_processor(model.processor)
     datamodule.setup()
