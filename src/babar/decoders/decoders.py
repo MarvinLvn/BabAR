@@ -1,4 +1,3 @@
-from typing import List
 import torch
 
 
@@ -13,8 +12,7 @@ class CTCGreedyDecoder:
         """
         self.tokenizer = tokenizer
 
-    def decode(self,
-               logits: torch.Tensor) -> List[int]:
+    def decode(self, logits):
         """
         Decode logits using greedy decoding - fully batched
 

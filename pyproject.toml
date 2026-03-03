@@ -20,7 +20,16 @@ dependencies = [
     "datasets>=3.1.0",
     # Shared
     "polars>=1.0.0",
+    # Needed by VTC/scripts/convert.py
+    "torchcodec>=0.7.0",
 ]
 
 [tool.uv.sources]
 segma = { git = "https://github.com/arxaqapi/segma", rev = "ea8a54be363ef3ce15e00a7252eb637dcfaac495" }
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

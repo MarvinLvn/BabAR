@@ -15,7 +15,7 @@ You can check that they are by running:
 ./check_sys_dependencies.sh
 ```
 
-You can the clone the repository:
+You can then clone the repository:
 
 ```sh
 # Clone repository
