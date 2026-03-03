@@ -22,8 +22,12 @@ You can then clone the repository:
 git-lfs install
 git clone --recurse-submodules https://github.com/MarvinLvn/BabAR.git
 
-# Install python dependencies
+# Get VTC2.0 and BabAR's weights
 cd BabAR
+git lfs pull
+git submodule foreach --recursive git lfs pull
+
+# Install python dependencies
 uv sync
 ```
 

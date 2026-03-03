@@ -1,17 +1,4 @@
 #!/usr/bin/env python3
-"""
-BabAR Pipeline: VTC on all files, then BabAR on all files.
-
-Each model is loaded once and unloaded before the next, so only one
-model occupies memory at any given time.
-
-Usage:
-    uv run src/pipeline.py \
-        --wavs audio_folder/ \
-        --output results/ \
-        --device cpu
-"""
-
 import argparse
 import gc
 import logging
@@ -70,15 +57,12 @@ def run_pipeline(
     vtc_batch_size: int = 128,
 ):
     """Run VTC on all files, then BabAR on all files.
-
-    Only one model is in memory at a time.
     """
     device = resolve_device(device)
 
     output.mkdir(parents=True, exist_ok=True)
     rttm_dir = output / "rttm"
     csv_dir = output / "phonemes"
-    csv_dir.mkdir(parents=True, exist_ok=True)
 
     wav_files = sorted(wavs.glob("*.wav"))
     if not wav_files:
@@ -88,48 +72,71 @@ def run_pipeline(
     logger.info(f"Found {len(wav_files)} audio file(s). Device: {device}")
 
     # -- Step 1: VTC on all files ------------------------------------------
-    logger.info("Step 1/2: Running VTC on all files...")
+    # Check which files already have an RTTM
+    wavs_needing_vtc = [
+        w for w in wav_files
+        if not (rttm_dir / f"{w.stem}.rttm").exists()
+    ]
 
-    vtc_infer(
-        wavs=str(wavs),
-        output=str(output),
-        config=str(REPO_ROOT / "VTC" / "VTC-2.0" / "model" / "config.yml"),
-        checkpoint=str(REPO_ROOT / "VTC" / "VTC-2.0" / "model" / "best.ckpt"),
-        batch_size=vtc_batch_size,
-        device=device,
+    if wavs_needing_vtc:
+        logger.info(
+            f"Step 1/2: Running VTC on {len(wavs_needing_vtc)}/{len(wav_files)} file(s) "
+            f"({len(wav_files) - len(wavs_needing_vtc)} already have RTTM, skipping)..."
+        )
+        vtc_infer(
+            wavs=str(wavs),
+            output=str(output),
+            config=str(REPO_ROOT / "VTC" / "VTC-2.0" / "model" / "config.yml"),
+            checkpoint=str(REPO_ROOT / "VTC" / "VTC-2.0" / "model" / "best.ckpt"),
+            batch_size=vtc_batch_size,
+            device=device,
+        )
+    else:
+        logger.info(f"Step 1/2: All {len(wav_files)} file(s) already have RTTM, skipping VTC.")
+
+    # Collect non-empty RTTMs
+    rttm_files = sorted(
+        f for f in rttm_dir.glob("*.rttm")
+        if f.stat().st_size > 0
     )
 
-    rttm_files = sorted(rttm_dir.glob("*.rttm"))
     if not rttm_files:
-        logger.warning("No RTTM files produced by VTC. No speech detected?")
+        logger.warning("No RTTM files with speech found. Nothing to transcribe.")
         return
 
-    # Filter out empty RTTMs
-    rttm_files = [f for f in rttm_files if f.stat().st_size > 0]
-    logger.info(f"VTC done. {len(rttm_files)} files with speech.")
-
-    if not rttm_files:
-        logger.warning("No speech detected in any file.")
-        return
+    logger.info(f"VTC done. {len(rttm_files)} file(s) with speech.")
 
     # Free VTC model memory before loading BabAR
     _free_gpu()
 
     # -- Step 2: BabAR on all files with RTTM ------------------------------
-    logger.info("Step 2/2: Running BabAR phoneme recognition...")
+    # Check which files already have a phoneme CSV
+    rttm_needing_babar = [
+        f for f in rttm_files
+        if not (csv_dir / f"{f.stem}.csv").exists()
+    ]
+
+    if not rttm_needing_babar:
+        logger.info(f"Step 2/2: All {len(rttm_files)} file(s) already have phoneme CSVs, skipping BabAR.")
+        return
+
+    logger.info(
+        f"Step 2/2: Running BabAR on {len(rttm_needing_babar)}/{len(rttm_files)} file(s) "
+        f"({len(rttm_files) - len(rttm_needing_babar)} already done, skipping)..."
+    )
 
     model = load_model(checkpoint, vocab_phoneme_path)
     model = model.to(device)
 
     total_utterances = 0
 
-    for i, rttm_file in enumerate(rttm_files, 1):
+    for i, rttm_file in enumerate(rttm_needing_babar, 1):
         wav_file = wavs / f"{rttm_file.stem}.wav"
         if not wav_file.exists():
             logger.warning(f"No matching WAV for {rttm_file.name}, skipping.")
             continue
 
-        logger.info(f"  BabAR [{i}/{len(rttm_files)}] {wav_file.name}")
+        logger.info(f"  BabAR [{i}/{len(rttm_needing_babar)}] {wav_file.name}")
 
         results_df = babar_infer(
             model=model,
@@ -142,6 +149,7 @@ def run_pipeline(
         )
 
         if results_df is not None and len(results_df) > 0:
+            csv_dir.mkdir(parents=True, exist_ok=True)
             csv_path = csv_dir / f"{rttm_file.stem}.csv"
             results_df.to_csv(csv_path, index=False)
             total_utterances += len(results_df)
@@ -152,7 +160,7 @@ def run_pipeline(
     del model
     _free_gpu()
 
-    logger.info(f"Done. {total_utterances} utterances across {len(rttm_files)} files -> {csv_dir}")
+    logger.info(f"Done. {total_utterances} utterances across {len(rttm_needing_babar)} files -> {csv_dir}")
 
 
 def main():
@@ -170,7 +178,7 @@ def main():
                         choices=["cpu", "cuda", "gpu", "mps"],
                         help="Compute device.")
 
-    # Optional parameters, strongly recommended to know choose different values for them
+    # Optional parameters
     parser.add_argument("--checkpoint", type=Path,
                         default=REPO_ROOT / "weights" / "best.ckpt",
                         help="Path to BabAR model checkpoint (.ckpt).")
