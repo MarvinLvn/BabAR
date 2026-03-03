@@ -6,7 +6,7 @@ It combines two tools:
 Given a folder of audio files, the pipeline produces .csv files with the onset & offset of each detected utterance.
 The key-child's utterances are further enriched with their phonetic transcription. 
 
-# Installation
+## Installation
 
 First, make sure that [uv](https://docs.astral.sh/uv/), [ffmpeg](https://ffmpeg.org/), and [git-lfs](https://git-lfs.com/) are installed on your system.
 You can check that they are by running:
@@ -27,6 +27,45 @@ cd BabAR
 uv sync
 ```
 
+## Usage
+
+```bash
+uv run src/pipeline.py \
+    --wavs path/to/audio_folder/ \
+    --output results/ \
+    --device cpu
+```
+
+where:
+- `--wavs`: folder containing your `.wav` files (must be 16 kHz, mono)
+- `--output`: directory where RTTMs and phoneme CSVs will be saved
+- `--device`:  use `cpu` to run on your processor (slower but always works), or `gpu` if your machine has an NVIDIA graphics card (much faster)
+
+Note that input audio files must be `.wav`, sampled at **16 kHz, **mono**. If your files are in a different format, you can convert them using:
+```shell
+uv run VTC/scripts/convert.py --wavs raw_audio/ --output converted_audio/
+```
+
+## Output
+
+The pipeline produces one `.csv` per recording in `<output>/phonemes/`:
+```
+results/
+├── rttm/
+│   ├── recording1.rttm
+│   └── recording2.rttm
+└── phonemes/
+    ├── recording1.csv
+    └── recording2.csv
+```
+
+Each `.csv` has the following format:
+
+```csv
+filename,onset,offset,speaker,phonemes
+recording1.wav,12.34,12.89,KCHI,b a b a
+recording1.wav,15.01,15.67,KCHI,m a m a
+```
 
 # Citation
 
@@ -34,34 +73,26 @@ uv sync
 
 # BabAr
 
-├── pyproject.toml
-├── README.md
-├── check_sys_dependencies.sh
-├── VTC-2.0/                        # git submodule (unchanged)
-├── weights/
-│   └── babar/                      # BabAR checkpoint + vocab json
+BabAR/
 ├── src/
-│   ├── vtc/
-│   │   ├── __init__.py
-│   │   ├── infer.py                # from VTC scripts/infer.py (minimal edits)
-│   │   └── convert.py              # from VTC scripts/convert.py
-│   ├── babar/
-│   │   ├── __init__.py
-│   │   ├── infer.py                # from BabAR infer.py, stripped of OOM retry logic
-│   │   ├── models/
-│   │   │   ├── __init__.py
-│   │   │   ├── BaseModule.py       # inference-only: keep load_from_checkpoint, forward, get_hidden_states, get_logits, mask_logits, decoder
-│   │   │   └── acoustic_models.py  # keep AcousticModel + only the encoders you ship (e.g. BabyHubert)
-│   │   ├── datamodules/
-│   │   │   ├── __init__.py
-│   │   │   └── contextual_vtc_datamodule.py  # unchanged
-│   │   ├── decoders/
-│   │   │   ├── __init__.py
-│   │   │   ├── decoders.py         # CTCGreedyDecoder only (drop beam search → drops torchaudio.models.decoder, kenlm)
-│   │   │   └── pipeline.py
-│   │   └── utils/
-│   │       ├── __init__.py
-│   │       └── logger.py
-│   └── pipeline.py                 # the glue
-└── scripts/
-    └── run.sh
+│   ├── pipeline.py              # Main entry point
+│   └── babar/
+│       ├── infer.py              # Phoneme recognition
+│       ├── models/
+│       │   ├── BaseModule.py     # Inference-only Lightning module
+│       │   └── acoustic_models.py
+│       ├── datamodules/
+│       │   └── contextual_vtc_datamodule.py
+│       └── decoders/
+│           └── decoders.py       # CTC greedy decoder
+├── VTC/                          # git submodule (github.com/LAAC-LSCP/VTC)
+│   ├── scripts/
+│   │   ├── infer.py              # VTC inference (called by pipeline)
+│   │   └── convert.py            # Audio format conversion
+│   └── VTC-2.0/                  # nested submodule (HuggingFace, model weights)
+├── weights/
+│   ├── best.ckpt                 # BabAR model checkpoint
+│   └── vocab-phoneme-tinyvox.json
+├── pyproject.toml
+├── .gitmodules
+└── README.md
