@@ -224,18 +224,19 @@ def run_pipeline(
             max_utt_dur=max_utt_dur,
         )
         babar_sec = time.time() - babar_start
-
+        csv_dir.mkdir(parents=True, exist_ok=True)
+        csv_path = csv_dir / f"{rttm_file.stem}.csv"
         n_utterances = 0
         if results_df is not None and len(results_df) > 0:
-            csv_dir.mkdir(parents=True, exist_ok=True)
-            csv_path = csv_dir / f"{rttm_file.stem}.csv"
+            results_df["onset"] = results_df["onset"].round(3)
+            results_df["offset"] = results_df["offset"].round(3)
             results_df.to_csv(csv_path, index=False)
             n_utterances = len(results_df)
             total_utterances += n_utterances
             logger.info(f"    {n_utterances} KCHI utterance(s) -> {csv_path} ({babar_sec:.1f}s)")
         else:
-            logger.info(f"    No KCHI utterances. ({babar_sec:.1f}s)")
-
+            pd.DataFrame(columns=["filename", "onset", "offset", "speaker", "phonemes"]).to_csv(csv_path, index=False)
+            logger.info(f"    No KCHI utterances, wrote empty CSV. ({babar_sec:.1f}s)")
         babar_timing.append({
             "filename": wav_file.name,
             "audio_duration_sec": round(_get_audio_duration(wav_file), 2),
