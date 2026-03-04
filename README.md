@@ -18,6 +18,7 @@ The key-child's utterances are further enriched with their phonetic transcriptio
 
 - [How to install BabAR?](docs/installation.md)
 - [How to run BabAR?](docs/usage.md)
+- [What sounds are predicted?](docs/phoneme_inventory.md)
 - [How long does running BabAR take?](docs/running_time.md)
 - [(Advanced) Downloading or recreating TinyVox (BabAR's training data)](https://github.com/MarvinLvn/tinyvox)
 - [(Advanced) Retraining BabAR](https://github.com/MarvinLvn/BabAR_training/)
