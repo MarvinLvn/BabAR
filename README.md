@@ -19,9 +19,7 @@ The key-child's utterances are further enriched with their phonetic transcriptio
 - [(Advanced) Downloading or recreating TinyVox (BabAR's training data)](https://github.com/MarvinLvn/tinyvox)
 - [(Advanced) Retraining BabAR](https://github.com/MarvinLvn/BabAR_training/)
 
-### Citation
-
-To cite this work, please u
+### References
 
 BabAR preprint:
 
