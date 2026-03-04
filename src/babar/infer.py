@@ -42,7 +42,6 @@ def load_model(
         weights_only=False,
     )
     model.eval()
-    model.half()
     return model
 
 

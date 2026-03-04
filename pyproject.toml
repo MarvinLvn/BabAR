@@ -19,7 +19,7 @@ dependencies = [
     "pandas>=2.2.0",
     "datasets>=3.1.0",
     # Shared
-    "polars>=1.0.0",
+    "polars[rtcompat]>=1.0.0",
     # Needed by VTC/scripts/convert.py
     "torchcodec>=0.7.0",
 ]

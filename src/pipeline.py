@@ -72,12 +72,9 @@ def _save_timing(timing_records: list[dict], output_path: Path):
 
     if output_path.exists():
         existing_df = pd.read_csv(output_path)
-        # Update existing rows, append new ones
         existing_df = existing_df.set_index("filename")
         new_df = new_df.set_index("filename")
-        existing_df.update(new_df)
-        # Add rows that are in new_df but not in existing_df
-        combined = pd.concat([existing_df, new_df[~new_df.index.isin(existing_df.index)]])
+        combined = existing_df.combine_first(new_df)
         combined = combined.reset_index().sort_values("filename")
     else:
         combined = new_df.sort_values("filename")
@@ -201,6 +198,8 @@ def run_pipeline(
 
     model = load_model(checkpoint, vocab_phoneme_path)
     model = model.to(device)
+    if device != "cpu":
+        model = model.half()
 
     total_utterances = 0
     babar_timing = []

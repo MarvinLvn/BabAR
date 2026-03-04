@@ -7,6 +7,7 @@ import soundfile as sf
 from datasets import Dataset
 from pytorch_lightning import LightningDataModule
 from torch.utils.data import DataLoader
+import torch
 
 logger = logging.getLogger("babar.datamodule")
 
@@ -213,5 +214,5 @@ class ContextualVTCDataModule(LightningDataModule):
             batch_size=self.batch_size,
             num_workers=self.num_workers,
             collate_fn=self.collate_fn,
-            pin_memory=True,
+            pin_memory=torch.cuda.is_available(),
         )
