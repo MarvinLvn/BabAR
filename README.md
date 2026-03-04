@@ -14,7 +14,7 @@ Given a folder of audio files, the pipeline produces .csv files with the onset &
 The key-child's utterances are further enriched with their phonetic transcription.
 </div>
 
-You can listen to some audio samples on the [project page](Listen to audio samples on the [project page](https://marvinlvn.github.io/projects/babar/).
+You can listen to some audio samples on the [project page](https://marvinlvn.github.io/projects/babar/).
 
 ### How to use?
 
