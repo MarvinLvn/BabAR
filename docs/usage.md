@@ -73,6 +73,8 @@ recording1.wav,15.01,15.67,KCHI,m a m a
 | `speaker` | Speaker label (always `KCHI`) |
 | `phonemes` | Space-separated IPA phoneme transcription |
 
+Note that some rows may have an empty phonemes field. This happens for very short utterances, faint speech sounds, or when VTC 2.0 misclassifies a non-speech segment as child speech.
+
 ### 3. GPU memory tip
 
 If you run into out-of-memory errors when running the model on GPU, try reducing `--batch_size` (e.g., 8 or 16).
