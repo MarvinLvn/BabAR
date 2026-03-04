@@ -1,3 +1,5 @@
+<div align="justify">
+
 <p align="center">
   <img src="docs/BabAR_logo.png" alt="BabAR logo" width="500">
 </p>
@@ -10,6 +12,7 @@ It combines two tools:
 
 Given a folder of audio files, the pipeline produces .csv files with the onset & offset of each detected utterance.
 The key-child's utterances are further enriched with their phonetic transcription.
+</div>
 
 ### How to use?
 
@@ -51,6 +54,8 @@ VTC 2.0 preprint:
 
 ### Acknowledgments
 
+<div align="justify">
 We acknowledge funding from the Simons Foundation International (funding from The Simons Foundation International (034070-00033) and the National Institutes of Health (NIH, grant number DP5-OD019812).
 We gratefully acknowledge PhonBank, funded by NIH-NICHD grant RO1-HD051698, and thank the data contributors whose corpora made this research possible.
 HPC resources from GENCI-IDRIS (Grant 2025-A0181011829).
+</div>
