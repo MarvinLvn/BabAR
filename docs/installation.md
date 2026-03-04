@@ -1,13 +1,13 @@
-## Installation
+## 1. Installation
 
-### System requirements
+### 1.1 System requirements
 
 Make sure the following tools are installed on your system:
 - [uv](https://docs.astral.sh/uv/) a python package manager
 - [ffmpeg](https://ffmpeg.org/) used for audio processing
 - [git-lfs](https://git-lfs.com/) required to download model weights
 
-### Install BabAR
+### 1.2 Install BabAR
 
 You can then run the following commands:
 
