@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/BabAR_logo.png" alt="BabAR logo" width="600">
+  <img src="docs/BabAR_logo.png" alt="BabAR logo" width="500">
 </p>
 
 
