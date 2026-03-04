@@ -1,7 +1,7 @@
 ## 1. Phoneme inventory
 
 BabAR predicts phonemes from a cross-linguistic inventory covering five languages: English, French, Portuguese, German, and Spanish. This means the model uses a shared set of IPA symbols rather than a language-specific one.
-The full inventory is defined in weights/vocab-phoneme-tinyvox.json.
+The full inventory is defined in `weights/vocab-phoneme-tinyvox.json`.
 
 ### 1.2 Vowel inventory
 
