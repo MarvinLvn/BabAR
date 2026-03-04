@@ -24,7 +24,7 @@ The key-child's utterances are further enriched with their phonetic transcriptio
 BabAR preprint:
 
 ```bibtex
-@misc{babar,
+@misc{lavechin_babar,
     title={BabAR: from phoneme recognition to developmental measures of young children's speech production}, 
     author={Marvin Lavechin and Elika Bergelson and Roger Levy},
     year={2026},
@@ -38,7 +38,7 @@ BabAR preprint:
 VTC 2.0 preprint:
 
 ```bibtex
-@misc{vtc2,
+@misc{charlot_vtc2,
     title={BabyHuBERT: Multilingual Self-Supervised Learning for Segmenting Speakers in Child-Centered Long-Form Recordings}, 
     author={Théo Charlot and Tarek Kunze and Maxime Poli and Alejandrina Cristia and Emmanuel Dupoux and Marvin Lavechin},
     year={2025},
