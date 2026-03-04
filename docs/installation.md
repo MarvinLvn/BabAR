@@ -7,6 +7,8 @@ Make sure the following tools are installed on your system:
 - [ffmpeg](https://ffmpeg.org/) used for audio processing
 - [git-lfs](https://git-lfs.com/) required to download model weights
 
+BabAR has been tested on Linux and macOS only. Windows is untested and may require additional setup
+
 ### 1.2 Install BabAR
 
 You can then run the following commands:
