@@ -2,12 +2,24 @@
 
 ### 1.1 System requirements
 
-Make sure the following tools are installed on your system:
-- [uv](https://docs.astral.sh/uv/) a python package manager
-- [ffmpeg](https://ffmpeg.org/) used for audio processing
-- [git-lfs](https://git-lfs.com/) required to download model weights
+Make sure [uv](https://docs.astral.sh/uv/), [ffmpeg](https://ffmpeg.org/), [git-lfs](https://git-lfs.com/) are installed.
 
-BabAR has been tested on Linux and macOS only. Windows is untested and may require additional setup
+Depending on your system, it should look like:
+```shell
+# For downloading model weights
+sudo apt install git-lfs       # Ubuntu/Debian
+brew install git-lfs            # macOS
+git-lfs install
+
+# For audio processing
+sudo apt install ffmpeg         # Ubuntu/Debian
+brew install ffmpeg             # macOS
+
+# For managing python packages
+curl -LsSf https://astral.sh/uv/install.sh | sh # Ubuntu/Debian/macOS
+```
+
+Note that BabAR has been tested on Linux and macOS only. Windows is untested and may require additional setup.
 
 ### 1.2 Install BabAR
 
@@ -15,7 +27,6 @@ You can then run the following commands:
 
 ```sh
 # Clone repository
-git-lfs install
 git clone --recurse-submodules https://github.com/MarvinLvn/BabAR.git
 
 # Get VTC2.0 and BabAR's weights
