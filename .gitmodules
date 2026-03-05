@@ -1,3 +1,6 @@
 [submodule "VTC"]
 	path = VTC
 	url = https://github.com/LAAC-LSCP/VTC.git
+[submodule "weights"]
+	path = weights
+	url = https://huggingface.co/MarvinLvn/BabAR
