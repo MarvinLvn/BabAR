@@ -29,10 +29,7 @@ You can then run the following commands:
 # Clone repository
 git clone --recurse-submodules https://github.com/MarvinLvn/BabAR.git
 
-# Get VTC2.0 and BabAR's weights
-cd BabAR
-git submodule foreach --recursive git lfs pull
-
 # Install python dependencies
+cd BabAR
 uv sync
 ```
