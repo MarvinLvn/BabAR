@@ -23,7 +23,7 @@ You can listen to some audio samples on the [project page](https://marvinlvn.git
 - [What sounds are predicted?](docs/phoneme_inventory.md)
 - [How long does it take to run BabAR?](docs/running_time.md)
 
-## For machine learners
+### For machine learners
 
 - [(Advanced) Downloading or recreating TinyVox (BabAR's training data)](https://github.com/MarvinLvn/tinyvox)
 - [(Advanced) Retraining BabAR](https://github.com/MarvinLvn/BabAR_training/)
