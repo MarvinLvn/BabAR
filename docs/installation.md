@@ -7,16 +7,16 @@ Make sure [uv](https://docs.astral.sh/uv/), [ffmpeg](https://ffmpeg.org/), [git-
 Depending on your system, it should look like:
 ```shell
 # For downloading model weights
-sudo apt install git-lfs       # Ubuntu/Debian
-brew install git-lfs            # macOS
-git-lfs install
+sudo apt install git-lfs       # ubuntu
+brew install git-lfs           # macOS
+git-lfs install                # both
 
 # For audio processing
-sudo apt install ffmpeg         # Ubuntu/Debian
+sudo apt install ffmpeg         # ubuntu
 brew install ffmpeg             # macOS
 
 # For managing python packages
-curl -LsSf https://astral.sh/uv/install.sh | sh # Ubuntu/Debian/macOS
+curl -LsSf https://astral.sh/uv/install.sh | sh # both
 ```
 
 Note that BabAR has been tested on Linux and macOS only. Windows is untested and may require additional setup.
