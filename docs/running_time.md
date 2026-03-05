@@ -5,8 +5,8 @@ Here's you'll find the approximate time it takes to run the pipeline on a single
 | Model | Running time (CPU) | Running time (GPU) |
 |:------|-------------------:|-------------------:|
 | VTC 2.0 |          2.7 hours |         60 seconds |
-| BabAR |                TBD |         18 seconds |
-| **Total** |            **TBD** |     **78 seconds** |
+| BabAR |          2.7 hours |         18 seconds |
+| **Total** |      **5.4 hours** |     **78 seconds** |
 
 Note that BabAR's running time depends on the number of KCHI utterances detected by VTC 2.0.
 Recordings with more child speech will take a bit longer.
