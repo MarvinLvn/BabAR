@@ -73,15 +73,16 @@ class BaseModule(LightningModule):
     def get_hidden_states(self, batch):
         """Get hidden states from encoder and extract target frames"""
         hidden_states = self.model(batch['array']).last_hidden_state
+        device = hidden_states.device
 
-        target_frame_starts = torch.tensor(batch['target_frame_start'], dtype=torch.long)
-        target_frame_ends = torch.tensor(batch['target_frame_end'], dtype=torch.long)
+        target_frame_starts = torch.tensor(batch['target_frame_start'], dtype=torch.long, device=device)
+        target_frame_ends = torch.tensor(batch['target_frame_end'], dtype=torch.long, device=device)
 
         frame_lengths = target_frame_ends - target_frame_starts
         max_target_frames = frame_lengths.max().item()
 
-        batch_indices = torch.arange(hidden_states.shape[0]).unsqueeze(1)
-        frame_indices = torch.arange(max_target_frames).unsqueeze(0)
+        batch_indices = torch.arange(hidden_states.shape[0], device=device).unsqueeze(1)
+        frame_indices = torch.arange(max_target_frames, device=device).unsqueeze(0)
         absolute_indices = target_frame_starts.unsqueeze(1) + frame_indices
         absolute_indices = torch.clamp(absolute_indices, 0, hidden_states.shape[1] - 1)
 
