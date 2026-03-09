@@ -33,21 +33,19 @@ You can listen to some audio samples on the [project page](https://marvinlvn.git
 BabAR preprint:
 
 ```bibtex
-@misc{lavechin_babar,
-    title={BabAR: from phoneme recognition to developmental measures of young children's speech production}, 
-    author={Marvin Lavechin and Elika Bergelson and Roger Levy},
-    year={2026},
-    eprint={incoming},
-    archivePrefix={arXiv},
-    primaryClass={eess.AS},
-    url={incoming}, 
+@article{lavechin2026babar,
+  title={BabAR: from phoneme recognition to developmental measures of young children's speech production},
+  author={Lavechin, Marvin and Bergelson, Elika and Levy, Roger},
+  journal={arXiv preprint arXiv:2603.05213},
+  year={2026}
 }
+
 ```
 
 VTC 2.0 preprint:
 
 ```bibtex
-@misc{charlot_vtc2,
+@misc{charlot2025vtc2,
     title={BabyHuBERT: Multilingual Self-Supervised Learning for Segmenting Speakers in Child-Centered Long-Form Recordings}, 
     author={Théo Charlot and Tarek Kunze and Maxime Poli and Alejandrina Cristia and Emmanuel Dupoux and Marvin Lavechin},
     year={2025},
