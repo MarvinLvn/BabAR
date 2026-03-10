@@ -306,7 +306,7 @@ def main():
         batch_size=args.batch_size,
         num_workers=args.num_workers,
         vtc_batch_size=args.vtc_batch_size,
-        max_utt_dur=30.0,
+        max_utt_dur=args.max_utt_dur,
     )
 
 
