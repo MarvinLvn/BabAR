@@ -6,16 +6,16 @@ Make sure [uv](https://docs.astral.sh/uv/), [ffmpeg](https://ffmpeg.org/), [git-
 
 Depending on your system, it should look like:
 ```shell
-# For downloading model weights
+# git-lfs for downloading model weights
 sudo apt install git-lfs       # ubuntu
 brew install git-lfs           # macOS
 git-lfs install                # both
 
-# For audio processing
+# ffmpeg for audio processing
 sudo apt install ffmpeg         # ubuntu
 brew install ffmpeg             # macOS
 
-# For managing python packages
+# uv for managing python packages
 curl -LsSf https://astral.sh/uv/install.sh | sh # both
 ```
 
