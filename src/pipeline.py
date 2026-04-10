@@ -94,6 +94,7 @@ def run_pipeline(
     num_workers: int = 4,
     vtc_batch_size: int = 128,
     max_utt_dur: float = 30.0,
+    high_precision: bool = False,
 ):
     """Run VTC on all files, then BabAR on all files.
 
@@ -130,12 +131,14 @@ def run_pipeline(
         )
 
         vtc_start = time.time()
+        logger.info(f"Using {'high precision' if high_precision else 'F1'} thresholds.")
         vtc_infer(
             wavs=str(wavs),
             output=str(output),
-            config=str(REPO_ROOT / "VTC" / "VTC-2.0" / "model" / "config.yml"),
-            checkpoint=str(REPO_ROOT / "VTC" / "VTC-2.0" / "model" / "best.ckpt"),
+            config=str(REPO_ROOT / "VTC" / "VTC-2" / "model" / "config.toml"),
+            checkpoint=str(REPO_ROOT / "VTC" / "VTC-2" / "model" / "best.ckpt"),
             batch_size=vtc_batch_size,
+            thresholds=REPO_ROOT / "VTC" / "thresholds" / ("hp.toml" if high_precision else "f1.toml"),
             device=device,
         )
         vtc_total_sec = time.time() - vtc_start
@@ -286,7 +289,11 @@ def main():
                         help="Number of dataloader workers.")
     parser.add_argument('--max_utt_dur', type=float, default=30.0,
                         help='Maximum utterance duration in seconds (filter out longer utterances)')
-
+    parser.add_argument(
+        "--high_precision",
+        action="store_true",
+        help="Use high-precision VTC thresholds. Reduces false positives at the cost of recall.",
+    )
     args = parser.parse_args()
 
     if not args.wavs.is_dir():
@@ -295,6 +302,7 @@ def main():
         parser.error(f"Checkpoint not found: {args.checkpoint}")
     if not args.vocab_phoneme_path.exists():
         parser.error(f"Vocabulary file not found: {args.vocab_phoneme_path}")
+
 
     run_pipeline(
         wavs=args.wavs,
@@ -307,6 +315,7 @@ def main():
         num_workers=args.num_workers,
         vtc_batch_size=args.vtc_batch_size,
         max_utt_dur=args.max_utt_dur,
+        high_precision=args.high_precision,
     )
 
 
