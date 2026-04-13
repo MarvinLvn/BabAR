@@ -29,7 +29,7 @@ from tqdm import tqdm
 
 ft = panphon.FeatureTable()
 
-GLIDES = {"j", "w", "ɥ"}
+GLIDES = {"j", "w", "ɥ", "h"}
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 VOCAB_PATH = REPO_ROOT / "weights" / "vocab-phoneme-tinyvox.json"
