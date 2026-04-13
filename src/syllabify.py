@@ -54,8 +54,8 @@ def get_sonority(phoneme: str) -> tuple[int, str]:
     nas  = f['nas']
     cont = f['cont']
 
+    if phoneme in GLIDES:         return 5, "glide"
     if syl == 1:                  return 6, "vowel"
-    if son == 1 and cons == -1:   return 5, "glide"
     if son == 1 and nas == 1:     return 3, "nasal"
     if son == 1:                  return 4, "liquid"
     if son == -1 and cont == 1:   return 2, "fricative"
