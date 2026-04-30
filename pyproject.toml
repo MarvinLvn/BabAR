@@ -3,7 +3,7 @@ name = "BabAR"
 version = "1.0"
 description = "BabAR version 1.0 (Interspeech release)"
 readme = "README.md"
-requires-python = ">=3.13, <3.14"
+requires-python = ">=3.13"
 dependencies = [
     # VTC
     "pyannote-audio>=3.4.0",
