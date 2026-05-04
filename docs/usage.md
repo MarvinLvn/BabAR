@@ -14,10 +14,17 @@ where:
 - `--output`: path to a folder where RTTMs and phoneme CSVs will be saved
 - `--device`:  use `cpu` to run on your processor (slower but always works), or `gpu` if your machine has an NVIDIA graphics card (much faster)
 
-Note that input audio files must be `.wav`, sampled at **16 kHz**, **mono**. If your files are in a different format, you can convert them using:
+Important: 
+
+1) Note that input audio files must be `.wav`, sampled at **16 kHz**, **mono**. If your files are in a different format, you can convert them using:
+
 ```shell
 uv run VTC/scripts/convert.py --wavs raw_audio/ --output converted_audio/
 ```
+
+2) By default, only the key child's (KCHI) utterances are transcribed. You may also want to transcribe 
+speech from other children (OCH) if, for example, you are not using child-worn microphones. In that case, add the `--transcribe_och` flag.
+
 
 ## 2. Output
 

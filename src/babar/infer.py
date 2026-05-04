@@ -76,8 +76,8 @@ def run_single(
     context_duration: float = 20.0,
     batch_size: int = 32,
     num_workers: int = 4,
-    speaker_filter: str = "KCHI",
-    max_utt_dur: int = None,
+    speaker_filter: list[str] = None,
+    max_utt_dur: int = ["KCHI"],
 ) -> Optional[pd.DataFrame]:
     """Run BabAR inference on a single (audio, rttm) pair.
 

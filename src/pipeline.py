@@ -95,6 +95,7 @@ def run_pipeline(
     vtc_batch_size: int = 128,
     max_utt_dur: float = 30.0,
     high_precision: bool = False,
+    transcribe_och: bool = False,
 ):
     """Run VTC on all files, then BabAR on all files.
 
@@ -225,6 +226,7 @@ def run_pipeline(
             batch_size=batch_size,
             num_workers=num_workers,
             max_utt_dur=max_utt_dur,
+            speaker_filter=["KCHI", "OCH"] if transcribe_och else ["KCHI"],
         )
         babar_sec = time.time() - babar_start
         csv_dir.mkdir(parents=True, exist_ok=True)
@@ -294,6 +296,11 @@ def main():
         action="store_true",
         help="Use high-precision VTC thresholds. Reduces false positives at the cost of recall.",
     )
+    parser.add_argument(
+        "--transcribe_och",
+        action="store_true",
+        help="If activated, will transcribe OCH utterances too (default to transcribing only KCHI).",
+    )
     args = parser.parse_args()
 
     if not args.wavs.is_dir():
@@ -316,6 +323,7 @@ def main():
         vtc_batch_size=args.vtc_batch_size,
         max_utt_dur=args.max_utt_dur,
         high_precision=args.high_precision,
+        transcribe_och=args.transcribe_och
     )
 
 

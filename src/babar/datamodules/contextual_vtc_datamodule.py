@@ -24,7 +24,7 @@ class ContextualVTCDataModule(LightningDataModule):
         self.context_duration_ms = self.context_duration * 1000
         self.batch_size = batch_size
         self.num_workers = num_workers
-        self.speaker_filter = speaker_filter
+        self.speaker_filter = [speaker_filter] if isinstance(speaker_filter, str) else speaker_filter
         self.max_utt_dur = max_utt_dur
 
         self.sampling_rate = 16000
@@ -49,7 +49,7 @@ class ContextualVTCDataModule(LightningDataModule):
                 duration = float(parts[4])
                 speaker = parts[7]
 
-                if speaker == self.speaker_filter:
+                if speaker in self.speaker_filter:
                     if self.max_utt_dur is not None and duration > self.max_utt_dur:
                         filtered_count += 1
                         continue
