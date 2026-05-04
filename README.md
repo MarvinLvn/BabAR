@@ -7,7 +7,7 @@
 
 BabAR is an end-to-end algorithm for phoneme recognition from child-centered long-form audio recordings (although it can be applied to any recordings).
 It combines two tools:
-1. VTC 2.0 (Voice Type Classifier) to detect when the child speaks
+1. VTC 2.0 (Voice Type Classifier) to detect when the key child (the child wearing the microphone) speaks
 2. BabAR (Babbling Automatic Recognition) to transcribe child speech segments into IPA phonemes
 
 Given a folder of audio files, the pipeline produces .csv files with the onset & offset of each detected utterance.
