@@ -6,6 +6,7 @@ To run BabAR, you can use the following command:
 uv run src/pipeline.py \
     --wavs path/to/audio_folder/ \
     --output babar_my_dataset/ \
+    --transcribe_och \
     --device cpu
 ```
 
@@ -22,9 +23,8 @@ Important:
 uv run VTC/scripts/convert.py --wavs raw_audio/ --output converted_audio/
 ```
 
-2) By default, only the key child's (KCHI) utterances are transcribed. You may also want to transcribe 
-speech from other children (OCH) if, for example, you are not using child-worn microphones. In that case, add the `--transcribe_och` flag.
-
+2) VTC 2.0 identifies speech segments from KCHI (key child), OCH (other children), MAL (male adult), FEM (female adult). By default, only the key child's (KCHI) utterances are transcribed. You may also want to transcribe 
+speech from other children (OCH) if, for example, you are not using child-worn microphones. In that case, add the `--transcribe_och` flag. Note that BabAR cannot transcribe speech from FEM or MAL since it has been trained to ignore adult speech.
 
 ## 2. Output
 
