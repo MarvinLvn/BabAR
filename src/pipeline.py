@@ -82,6 +82,21 @@ def _save_timing(timing_records: list[dict], output_path: Path):
     output_path.parent.mkdir(parents=True, exist_ok=True)
     combined.to_csv(output_path, index=False)
 
+def _validate_wav_files(wav_files: list[Path]):
+    """Warn about wav files that are not 16kHz mono."""
+    invalid = []
+    for wav in wav_files:
+        info = sf.info(wav)
+        if info.samplerate != 16000 or info.channels != 1:
+            invalid.append(
+                f"  {wav.name}: {info.samplerate}Hz, {info.channels} channel(s)"
+            )
+    if invalid:
+        raise ValueError(
+            "The following files are not 16kHz mono. "
+            "Please convert them first using VTC/scripts/convert.py:\n"
+            + "\n".join(invalid)
+        )
 
 def run_pipeline(
     wavs: Path,
@@ -116,7 +131,8 @@ def run_pipeline(
     if not wav_files:
         logger.error(f"No .wav files found in {wavs}")
         return
-
+    _validate_wav_files(wav_files)
+    
     logger.info(f"Found {len(wav_files)} audio file(s). Device: {device}")
 
     # -- Step 1: VTC on all files ------------------------------------------
