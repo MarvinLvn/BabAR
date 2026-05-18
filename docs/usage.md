@@ -6,7 +6,6 @@ To run BabAR, you can use the following command:
 uv run src/pipeline.py \
     --wavs path/to/audio_folder/ \
     --output babar_my_dataset/ \
-    --transcribe_och \
     --device cpu
 ```
 
