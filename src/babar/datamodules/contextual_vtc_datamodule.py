@@ -129,12 +129,16 @@ class ContextualVTCDataModule(LightningDataModule):
             raise ValueError("Processor must be set before calling setup().")
 
         utterances = self.parse_rttm()
+        self.filtered_utterances = [
+            u for u in utterances
+            if self.max_utt_dur is not None and u['duration'] / 1000 > self.max_utt_dur
+        ]
+        short_utterances = [
+            u for u in utterances
+            if self.max_utt_dur is None or u['duration'] / 1000 <= self.max_utt_dur
+        ]
 
-        if len(utterances) == 0:
-            self.dataset = Dataset.from_list([])
-            return
-
-        contextual_samples = self._create_contextual_metadata(utterances)
+        contextual_samples = self._create_contextual_metadata(short_utterances)
         self.dataset = Dataset.from_list(contextual_samples)
 
     def _load_audio_segment(self, audio_path, offset_ms, duration_ms):

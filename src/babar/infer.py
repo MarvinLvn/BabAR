@@ -76,8 +76,8 @@ def run_single(
     context_duration: float = 20.0,
     batch_size: int = 32,
     num_workers: int = 4,
-    speaker_filter: list[str] = None,
-    max_utt_dur: int = ["KCHI"],
+    speaker_filter: list[str] = ["KCHI"],
+    max_utt_dur: Optional[float] = 30.0,
 ) -> Optional[pd.DataFrame]:
     """Run BabAR inference on a single (audio, rttm) pair.
 
@@ -89,8 +89,9 @@ def run_single(
         context_duration: Context window in seconds.
         batch_size: Batch size.
         num_workers: Dataloader workers.
-        speaker_filter: Speaker label to extract from RTTM.
-        max_utt_dur: Maximum duration in seconds (all utterances longer than max_utt_dur won't be passed to BabAR).
+        speaker_filter: Speaker labels to extract from RTTM.
+        max_utt_dur: Maximum duration in seconds (utterances longer than this
+            are included in the output CSV with empty phonemes but not passed to BabAR).
 
     Returns:
         DataFrame with columns [filename, onset, offset, speaker, phonemes],
@@ -108,31 +109,45 @@ def run_single(
     datamodule.set_processor(model.processor)
     datamodule.setup()
 
-    if len(datamodule.dataset) == 0:
+    results = []
+
+    if len(datamodule.dataset) > 0:
+        for sample in datamodule.dataset:
+            if sample["utterance_duration_sec"] < 0.1:
+                logger.warning(
+                    f"Short segment: {sample['utterance_duration_sec']:.4f}s at {sample['utterance_onset_sec']:.3f}s"
+                )
+
+        dataloader = datamodule.dataloader()
+        for batch in tqdm(dataloader, desc=f"  {audio_path.stem}", leave=False):
+            predictions = predict_batch(model, batch, device)
+
+            for i, pred in enumerate(predictions):
+                results.append(
+                    {
+                        "filename": audio_path.name,
+                        "onset": batch["utterance_onset_sec"][i],
+                        "offset": batch["utterance_onset_sec"][i]
+                        + batch["utterance_duration_sec"][i],
+                        "speaker": batch["speaker"][i],
+                        "phonemes": pred,
+                    }
+                )
+
+    for u in datamodule.filtered_utterances:
+        results.append(
+            {
+                "filename": audio_path.name,
+                "onset": round(u["onset"] / 1000, 3),
+                "offset": round(u["offset"] / 1000, 3),
+                "speaker": u["speaker"],
+                "phonemes": "",
+            }
+        )
+
+    if not results:
         logger.info(f"No {speaker_filter} utterances in {rttm_path.name}")
         return None
 
-    dataloader = datamodule.dataloader()
-    results = []
-
-    for batch in tqdm(dataloader, desc=f"  {audio_path.stem}", leave=False):
-        predictions = predict_batch(model, batch, device)
-
-        for i, pred in enumerate(predictions):
-            results.append(
-                {
-                    "filename": audio_path.name,
-                    "onset": batch["utterance_onset_sec"][i],
-                    "offset": batch["utterance_onset_sec"][i]
-                    + batch["utterance_duration_sec"][i],
-                    "speaker": batch["speaker"][i],
-                    "phonemes": pred,
-                }
-            )
-
-    if not results:
-        return None
-
-    return pd.DataFrame(
-        results, columns=["filename", "onset", "offset", "speaker", "phonemes"]
-    )
+    df = pd.DataFrame(results, columns=["filename", "onset", "offset", "speaker", "phonemes"])
+    return df.sort_values("onset").reset_index(drop=True)

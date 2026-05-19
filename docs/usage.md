@@ -1,12 +1,19 @@
-## 1. Usage
+## 0. Prerequisites
 
-To run BabAR, you can use the following command:
+Your input audio files must be `.wav` files sampled at **16 kHz**, **mono**. If your files are in a different format, you can convert them using:
+
+```shell
+uv run VTC/scripts/convert.py --wavs raw_audio/ --output converted_audio/
+```
+
+## 1. Running VTC 2.0 + BabAR
+
+You can use the following command:
 
 ```bash
 uv run src/pipeline.py \
     --wavs path/to/audio_folder/ \
-    --output babar_my_dataset/ \
-    --transcribe_och \
+    --output my_dataset_vtc2_babar/ \
     --device cpu
 ```
 
@@ -15,18 +22,26 @@ where:
 - `--output`: path to a folder where RTTMs and phoneme CSVs will be saved
 - `--device`:  use `cpu` to run on your processor (slower but always works), or `gpu` if your machine has an NVIDIA graphics card (much faster)
 
-Important: 
+Note that this will first run VTC 2.0 on all files to identify speech segments from KCHI (key child), OCH (other children), MAL (male adult), FEM (female adult) and then run BabAR on KCHI segments.
+You may also want to transcribe speech from other children (OCH) if, for example, you are not using child-worn microphones. In that case, add the `--transcribe_och` flag. 
+Note that BabAR cannot transcribe speech from FEM or MAL since it has been trained to ignore adult speech.
 
-1) Note that input audio files must be `.wav`, sampled at **16 kHz**, **mono**. If your files are in a different format, you can convert them using:
+## 2. Running BabAR from LENA diarization .its files
+
+If you don't want to use VTC 2.0 but rather prefer to transcribe child speech from segments found by LENA, you can use the following command:
 
 ```shell
-uv run VTC/scripts/convert.py --wavs raw_audio/ --output converted_audio/
+uv run src/pipeline.py \
+    --wavs path/to/audio_folder/ \
+    --its path/to/its_folder/ \
+    --output my_dataset_lena_babar/ \
+    --device cpu
 ```
 
-2) VTC 2.0 identifies speech segments from KCHI (key child), OCH (other children), MAL (male adult), FEM (female adult). By default, only the key child's (KCHI) utterances are transcribed. You may also want to transcribe 
-speech from other children (OCH) if, for example, you are not using child-worn microphones. In that case, add the `--transcribe_och` flag. Note that BabAR cannot transcribe speech from FEM or MAL since it has been trained to ignore adult speech.
+Note that we recommend using VTC 2.0 over LENA diarization, as it has been shown to achieve [higher performance](https://arxiv.org/abs/2509.15001). 
+That said, you may be interested in comparing VTC 2.0 + BabAR to LENA + BabAR, or in revisiting past analyses based on LENA diarization.
 
-## 2. Output
+## 3. Output
 
 The pipeline writes all results to the `--output` directory:
 
@@ -40,7 +55,7 @@ babar_my_dataset/
     └── recording2.csv
 ```
 
-### 2.1 RTTM files
+### 3.1 RTTM files
 
 VTC 2.0 produces one `.rttm` per recording in `<output>/rttm/`. Each line describes a detected speech/vocalization utterance:
 
@@ -62,7 +77,7 @@ The RTTM format has 10 space-separated columns. Most can be ignored — the rele
 
 Speaker labels include `KCHI` (key child), `OCH` (other child), `FEM` (female adult), and `MAL` (male adult).
 
-### 2.2 Phoneme CSV files
+### 3.2 Phoneme CSV files
 
 BabAR produces one `.csv` per recording in `<output>/phonemes/`. Only key-child utterances are transcribed:
 
@@ -82,7 +97,7 @@ recording1.wav,15.01,15.67,KCHI,m a m a
 
 Note that some rows may have an empty phonemes field. This happens for very short utterances, faint speech sounds, or when VTC 2.0 misclassifies a non-speech segment as child speech.
 
-## 3. Enriching phoneme CSVs with syllabification
+## 4. Enriching phoneme CSVs with syllabification
 
 To enrich the phoneme CSVs with syllabification and CV patterns, run:
 
@@ -101,6 +116,6 @@ Enriched CSV files are saved to `babar_my_dataset/phonemes_enriched/`. Each file
 
 Syllabification uses the Sonority Sequencing Principle (Clements, 1990). No language-specific resources are required.
 
-## 4. GPU memory tip
+## 5. GPU memory tip
 
 If you run into out-of-memory errors when running the model on GPU, try reducing `--batch_size` (e.g., 8 or 16).
