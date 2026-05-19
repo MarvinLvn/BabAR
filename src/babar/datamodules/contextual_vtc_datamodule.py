@@ -33,7 +33,6 @@ class ContextualVTCDataModule(LightningDataModule):
     def parse_rttm(self) -> List[Dict]:
         """Parse RTTM file and extract utterances for specified speaker type."""
         utterances = []
-        filtered_count = 0
 
         with open(self.rttm_path, 'r') as f:
             for line in f:
@@ -50,10 +49,6 @@ class ContextualVTCDataModule(LightningDataModule):
                 speaker = parts[7]
 
                 if speaker in self.speaker_filter:
-                    if self.max_utt_dur is not None and duration > self.max_utt_dur:
-                        filtered_count += 1
-                        continue
-
                     utterances.append({
                         'onset': onset * 1000,
                         'offset': (onset + duration) * 1000,
@@ -62,8 +57,6 @@ class ContextualVTCDataModule(LightningDataModule):
                     })
 
         logger.info(f"Found {len(utterances)} utterances for speaker '{self.speaker_filter}'")
-        if self.max_utt_dur is not None and filtered_count > 0:
-            logger.info(f"Filtered out {filtered_count} utterances longer than {self.max_utt_dur}s")
         return utterances
 
     def _create_contextual_metadata(self, utterances: List[Dict]) -> List[Dict]:

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.0] - 2026-05-19
+**Commit:** `5ffed283994372aa2be1692b6241749e5a1e0c39`
+
+### Added
+- BabAR can now be run on LENA-detected segments
+
 ## [1.1.0] - 2026-04-10
 **Commit:** `a7c67653cba3afed5ee8317598d8825583c6a0d2`
 
