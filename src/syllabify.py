@@ -188,7 +188,7 @@ def enrich(input_folder: str, anonymize: bool = False):
 
         # Count syllables and phonemes
         df["n_syllables"] = df["syllable_list"].apply(len).replace(0, 1)
-        df["n_phonemes"] = df["phoneme_list"].apply(len)
+        df["n_phonemes"] = df["phoneme_list"].apply(len).replace(0, 1)
 
         # CV pattern — syllable-separated, mirrors 'syllables' column
         df["cv"] = df["syllable_list"].apply(
