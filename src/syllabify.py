@@ -136,18 +136,24 @@ def syllabify_ssp(phonemes: list[str], sonority_table: dict) -> list[list[str]]:
             for i in range(len(boundaries) - 1)]
 
 
-def to_cv(phonemes: list[str], type_table: dict) -> str:
-    """Convert a list of phonemes to a C/V string, treating glides as vowels."""
-    result = []
-    for p in phonemes:
-        if type_table.get(p) == "vowel" or p in GLIDES:
-            result.append("V")
-        else:
-            result.append("C")
-    return " ".join(result)
+def phoneme_to_cv(p: str, type_table: dict) -> str:
+    return "V" if type_table.get(p) == "vowel" or p in GLIDES else "C"
 
 
-def enrich(input_folder: str):
+def to_cv(syllables: list[list[str]], type_table: dict) -> str:
+    """Convert syllabified phonemes to a CV string with | as syllable separator.
+
+    Each syllable's phonemes are mapped to C/V and joined by spaces;
+    syllables are separated by |, mirroring the 'syllables' column format.
+    Example: [['b', 'a'], ['b', 'a']] -> 'C V|C V'
+    """
+    return "|".join(
+        " ".join(phoneme_to_cv(p, type_table) for p in syl)
+        for syl in syllables
+    )
+
+
+def enrich(input_folder: str, anonymize: bool = False):
     # Define output folder
     parent = os.path.dirname(os.path.abspath(input_folder))
     output_folder = os.path.join(parent, "phonemes_enriched")
@@ -172,26 +178,40 @@ def enrich(input_folder: str):
             lambda x: x if isinstance(x, list) and x != ["nan"] else []
         )
 
-        # Syllabify
-        df["syllables"] = df["phoneme_list"].apply(
-            lambda syls: "|".join(
-                " ".join(syl) for syl in syllabify_ssp(syls, sonority_table)
-            )
+        # Syllabify — keep the list for cv computation, then stringify
+        df["syllable_list"] = df["phoneme_list"].apply(
+            lambda p: syllabify_ssp(p, sonority_table)
+        )
+        df["syllables"] = df["syllable_list"].apply(
+            lambda syls: "|".join(" ".join(syl) for syl in syls)
         )
 
         # Count syllables and phonemes
-        df["n_syllables"] = df["syllables"].apply(
-            lambda s: len(s.split("|")) if s else 0
-        )
+        df["n_syllables"] = df["syllable_list"].apply(len).replace(0, 1)
         df["n_phonemes"] = df["phoneme_list"].apply(len)
 
-        # CV pattern
-        df["cv"] = df["phoneme_list"].apply(
-            lambda p: to_cv(p, type_table)
+        # CV pattern — syllable-separated, mirrors 'syllables' column
+        df["cv"] = df["syllable_list"].apply(
+            lambda syls: to_cv(syls, type_table)
         )
 
-        # Drop intermediate column
-        df = df.drop(columns=["phoneme_list"])
+        # Canonical syllable count and utterance-level canonical flag
+        df["n_canonical_syllables"] = df["syllable_list"].apply(
+            lambda syls: sum(
+                1 for syl in syls
+                if any(type_table.get(p) != "vowel" and p not in GLIDES for p in syl)
+                and any(type_table.get(p) == "vowel" or p in GLIDES for p in syl)
+            )
+        )
+        df["is_canonical"] = df["n_canonical_syllables"] > 0
+
+        # Drop intermediate columns
+        df = df.drop(columns=["phoneme_list", "syllable_list"])
+
+        # Anonymize: replace phoneme-level content with <hidden>
+        if anonymize:
+            df["phonemes"] = "<hidden>"
+            df["syllables"] = "<hidden>"
 
         # Save to output folder
         output_path = os.path.join(output_folder, os.path.basename(f))
@@ -201,8 +221,17 @@ def enrich(input_folder: str):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: uv run src/syllabify.py <input_folder>")
-        sys.exit(1)
+    import argparse
 
-    enrich(sys.argv[1])
+    parser = argparse.ArgumentParser(
+        description="Enrich BabAR phoneme CSVs with syllabification and CV patterns."
+    )
+    parser.add_argument("input_folder", help="Folder containing per-file phoneme CSVs.")
+    parser.add_argument(
+        "--anonymize",
+        action="store_true",
+        help="Replace 'phonemes' and 'syllables' columns with <hidden> in the output.",
+    )
+    args = parser.parse_args()
+
+    enrich(args.input_folder, anonymize=args.anonymize)

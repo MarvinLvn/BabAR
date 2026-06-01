@@ -107,12 +107,14 @@ uv run src/syllabify.py babar_my_dataset/phonemes/
 
 Enriched CSV files are saved to `babar_my_dataset/phonemes_enriched/`. Each file contains the original columns plus:
 
-| Column | Description |
+ Column | Description |
 |--------|-------------|
 | `syllables` | Syllables separated by `\|`, phonemes within a syllable separated by spaces (e.g. `æ\|b u`) |
 | `n_syllables` | Number of syllables |
 | `n_phonemes` | Number of phonemes |
-| `cv` | CV pattern, with glides treated as vowels (e.g. `V C V`) |
+| `cv` | CV pattern mirroring `syllables`: syllables separated by `\|`, tokens within a syllable separated by spaces, glides treated as vowels (e.g. `V\|C V`) |
+| `n_canonical_syllables` | Number of syllables containing at least one consonant and one vowel |
+| `is_canonical` | `True` if `n_canonical_syllables > 0` |
 
 Syllabification uses the Sonority Sequencing Principle (Clements, 1990). No language-specific resources are required.
 
