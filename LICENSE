@@ -1,21 +1,187 @@
-MIT License
+BabyHuBERT License v1.0
 
-Copyright (c) 2026 Marvin Lavechin
+This license (the “License”) between you (“the Licensee”) and Maxime Poli, Alejandrina Cristia, Emmanuel Dupoux, and Marvin Lavechin ("Licensors") is designed with a dual purpose: to enable scientific progress and open access to models trained on data from under-represented communities, while ensuring that such access does not come at the cost of exploiting or harming those same communities.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Section I: PREAMBLE
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The lack of freely-available, pre-trained Natural Language Processing (“NLP”) models in the majority of the world’s languages is concerning. Expanding linguistic diversity in mainstream NLP research is necessary,  yet releasing open-access models and datasets representing under-represented populations, including Indigenous Peoples, can backfire into exploitation of or discrimination against those same communities (as outlined in Articles 2; 13–16; and 31 of the United Nations Declaration on the Rights of Indigenous People).
+Rather than restricting access entirely, this License seeks a middle path: one that promotes interdisciplinary collaborations between speech technologists, linguistics, and the communities whose data underlies this research. Drawing on the Responsible AI License (RAIL)-M framework, the Licensors  have adapted it to apply to under-resourced languages and, specifically, to the BabyHuBERT model (defined in §1.4 below). The Licensors view this License as an opportunity for the research community to work in ways that are inclusive and respectful of the world's children and their families, and have modified the language accordingly to improve accessibility.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+This License governs two categories of users. Developers (those who use the Model to build derivative models or applications) must abide by this License and ensure that any publicly released Derivative inherits, at minimum, the same use-based restrictions. End users (those who simply use the Outputs of a Derivative, e.g., a researcher running a voice type classifier fine-tuned from the Model) are not required to sign or abide by this License, as Outputs (defined in $1.3) are not governed by it. 
+Now therefore, the Licensee and the Licensors agree as follows:
+
+1. Definitions
+
+"License" means the terms and conditions for use, reproduction, and distribution as defined in this document.
+"Data" means the child-centered multilingual speech recordings used to train BabyHuBERT. The Data is not licensed under this License.
+“Output” is the result of operating the Model or its derivatives; e.g. the output files resulting from applying a voice type classifier.
+“Model” means BabyHuBERT, a self-supervised speech model consisting of a neural network architecture and its associated trained parameters (weights and checkpoints), pre-trained on child-centered multilingual speech data: see Charlot, T., Kunze, T., Poli, M., Cristia, A., Dupoux, E., & Lavechin, M. (2026). BabyHuBERT: Multilingual self-supervised learning for segmenting speakers in child-centered long-form recordings. arXiv. https://doi.org/10.48550/arXiv.2509.15001.
+“Derivatives of the Model” means all modifications to the Model, which is created by initializing from BabyHuBERT parameters, or trained using BabyHubert activations or output, whether BabyHubert is used alone or as a component of a larger system.
+“Complementary Material” means the accompanying source code and scripts used to define, run, load, benchmark or evaluate the Model, and used to prepare data for training or evaluation, if any. This includes any accompanying documentation, tutorials, examples, if any.
+“Distribution” means any transmission, reproduction, publication or other sharing of Derivatives of the Model to a third party, including providing the Model as a hosted service made available by electronic or other remote means, e.g. API-based or web access.
+“Licensors” means Maxime Poli, Emmanuel Dupoux, Alejandrina Cristia, and Marvin Lavechin, acting in the capacity as legal administrator of this License. The Licensors hold the rights necessary to grant this License and to take legal action against any Licensee who violates its terms.
+“Licensee” means an individual or Legal Entity exercising permissions granted by this License, including through the use of the Model or a Derivative thereof - e.g. for voice type classification, addressee detection, or speech transcription.
+“Ethics Discussion Body” means the community body currently operating as DARCLE, convened through a regular meeting cycle, maintaining an elected leadership board, and reachable through the mailing list (darcle@googlegroups.com). 
+“Third Parties” means individuals or legal entities that are not under the control of the Licensors or the Licensee.
+“Commercial Use” means any use of the Model, Derivatives of the Model and Complementary Material primarily intended for or directed toward commercial advantage or monetary compensation.
+“Natural Language” means spoken, signed, or written communication as used by a community of people in their daily life and for their own purposes.
+“Natural Language Processing” (or “NLP”) means algorithms that allow computers to process language automatically (written, spoken, or signed)
+
+Section II: INTELLECTUAL PROPERTY RIGHTS
+
+Both copyright and patent grants apply to the Model, Derivatives of the Model and Complementary Material. The Model and Derivatives of the Model are subject to additional terms as described in Section III.
+
+2. Grant of Copyright License Subject to the terms of this License, Licensors grant the Licensee a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license to reproduce, prepare, and publicly share the Complementary Material, and make available Derivatives of the Model, provided that any such distribution is governed by this License.
+
+3. Grant of Patent License Subject to the terms of this License, Licensors grant the Licensee a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable license to use, import, and distribute Derivatives of the Model and Complementary Material. Any Licensee who initiates patent litigation claiming that BabyHuBERT infringes their patent will immediately lose all rights granted under this License.
+
+Section III: CONDITIONS OF USAGE, DISTRIBUTION AND REDISTRIBUTION
+
+4. Distribution and Redistribution The Licensee may not redistribute BabyHuBERT, nor host it for Third Party remote access purposes (e.g. software-as-a-service). The Licensee may distribute Derivatives of the Model, or make them remotely accessible to third parties, provided that (a) any legal agreement governing the Derivative incorporates the use-based restrictions in paragraph 5 and Attachments A-C as enforceable terms, and (b) recipients are notified that these restrictions apply.
+
+5. Use-Based Restrictions The Licensee may not use the Model or Derivatives of the Model for the purposes restricted by Attachment A. Additional obligations governing use are set forth in paragraphs 5.1 through 5.3.
+
+1. Shared Ethical Responsibility By accessing, downloading, using, reproducing, modifying the Model, or any Derivative thereof, the Licensee acknowledges and expressly accepts shared ethical responsibility for the known risks inherent to this Model. Attachment B lists these risks. 
+
+2 Risk Mitigation Obligations As a material condition of this License, the Licensee agrees to cooperate in good faith with risk mitigation strategies identified in Attachment C. 
+
+3 Breach Failure to comply with the conditions set forth in paragraph 5 and Attachments A-C shall constitute a material breach of this License and shall result in immediate termination of the rights granted herein.
+
+6. The Output the Licensee Generates  The Licensee is accountable for Outputs they generate using the Model and their subsequent uses. Outputs may not be used in ways that contravene this License.
+Section IV: OTHER PROVISIONS
+
+7. Division of Roles The parties acknowledge and agree that this License operates under a division of roles. Licensors hold all legal rights associated with the Model and this License, including the right to take legal action against any party that violates its term. The Ethics Discussion Body provides a forum for discussion of interpretation regarding Attachments A-C.  The Ethics Discussion Body is identified for purposes of this License for the maintenance of the two main places where ethical discussion may be held, namely  (i) the mailing list (darcle@googlegroups.com), and (ii) the monthly meeting. If the Ethics Discussion Body undergoes a name change, restructuring, or transfer of its identifying functions to a successor body, it shall notify Licensors in writing within thirty (30) days and the successor body shall be deemed the Ethics Discussion Body for all purposes of this License upon such notification.
+
+8. Trademarks and Related Nothing in this License permits the Licensee to make use of Licensors’ trademarks, trade names, logos or to otherwise suggest endorsement or misrepresent the relationship between the parties; and any rights not expressly granted herein are reserved by the Licensors.
+
+9. Disclaimer of Warranty Unless required by applicable law or agreed to in writing, Licensors provide the Model and the Complementary Material on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied, including, without limitation, any warranties or conditions of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. The Licensee is solely responsible for determining the appropriateness of using the Model, Derivatives of the Model, and the Complementary Material and assume any risks associated with their exercise of permissions under this License.
+
+10. Limitation of Liability In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law ( such as deliberate and grossly negligent acts) or agreed to in writing, shall Licensors be liable to the Licensee for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Model and the Complementary Material (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if Licensors have been made aware of the possibility of such damages.
+
+11. Accepting Warranty or Additional Liability Licensees who redistribute the Model may offer warranty or support obligations on their own behalf, but may not impose any obligations on the Licensors.
+
+12. Severability If any provision of this License is held to be invalid, illegal or unenforceable, the remaining provisions shall be unaffected thereby and remain valid as if such provision had not been set forth herein.
+
+END OF TERMS AND CONDITIONS
+
+Attachment A
+
+Use Restrictions
+
+The Licensee agrees not to use the Model or Derivatives of the Model:
+
+A. For any commercial purposes primarily intended for or directed toward commercial advantage or monetary compensation, with the exception of applications incorporating benefit-sharing (see below);
+B. In any way that violates any applicable national, federal, state, local or international law or regulation;
+C. For fully automated decision making that adversely impacts an individual’s legal rights or otherwise creates or modifies a binding, enforceable obligation;
+
+D. Regarding Derivatives with generative capabilities: 
+a. To generate or disseminate false information and/or content;
+b. To generate or disseminate personal identifiable information that can be used to harm an individual;
+c. To impersonate or attempt to impersonate (e.g. deepfakes) others without their consent;
+E. For harmful purposes, for example exploitation, defamation, disparagement, discrimination, or surveillance.
+
+The potential for harm emerging from some applications may depend on contextual factors. For any application where you are uncertain of whether its end uses may entail harm, we recommend sharing your general research questions or expected purposes ahead of time with the Ethics Discussion Body  (darcle@googlegroups.com), or its leadership, if needing to preserve confidentiality, so as to invite discussion on it and get informed by the community. 
+
+We ask Licensees to email the Ethics Discussion Body  (darcle@googlegroups.com), or its leadership, if needing to preserve confidentiality, ideally in advance of publication
+
+A. For any commercial purposes which contain a benefit-sharing approach. For advice and concrete examples of benefit sharing, see https://nagoyaprotocol-hub.de/benefit-sharing/ and the InfoSheet 2024 on “Approaches to Benefit Sharing” available from https://www.waikato.ac.nz/assets/Uploads/Research/Research-institutes-centres-and-groups/Institutes/TKRI/Information-sheets/TKRI-IP-Infosheet-Approaches-23-Sep-2024-Online.pdf.
+B. Since the Model was neither designed nor validated for clinical use, its application in this domain may introduce biases and increase the risk of misdiagnosis, in cases like:
+a. Research on predictive profiling of children, such as attempts to forecast educational outcomes based on speech development;
+b. Clinical decision-making applications, including the diagnosis of speech pathologies; 
+c. Neurodivergent related applications constitute another example of harmful but non malicious derivative application. In this scenario, downstream researchers would fine-tune BabyHuBERT for neurodevelopmental screening or intervention. They could identify neurodivergent speech patterns as disorders and recommend interventions to eliminate these patterns rather than accommodate them. They could also proceed without input from the neurodivergent advocacy organisations who should be consulted for such research.
+d. To monitor children's speech for content-based screening, behavioral profiling, or enforcement purposes.
+
+Attachment B
+
+Known risks
+
+We note that the Licensors do not consider it technically possible to reconstruct the original training data from the Model. They invite anyone with evidence contradicting this belief to communicate it to the Ethical Discussion Board.
+
+Risk 1 – Temporal Consent Gap
+
+The audio recordings used to pre-train BabyHuBERT were collected in the context of child language research and before machine-learning techniques like “pre-training”, “self-supervision” or “representation learning” existed; moreover, recent developments have led the general population to hold ideas about AI-based modelling, which was an arcane topic before. Neither the researchers who collected the data nor the families who agreed to participate could have anticipated this type of use — and the children recorded cannot retroactively consent now that they have grown up. As a result, any use of BabyHuBERT or its derivative inherits this gap between what participants originally consented to and what their data ultimately enabled.
+
+Risk 2 – Uncertainty of Scope of Reuse
+
+Since BabyHuBERT is a speech representation model, it can be used for many things. It is that much harder to define which reuses are aligned with the original consent form, and which may ultimately prove to be harmful. Furthermore, by increasing the accessibility of BabyHuBERT, derivative models increase this risk, because they can extend it to new audiences and new applications beyond what had been anticipated.
+
+Risk 3 – Diffusion of Moral Responsibility
+
+BabyHuBERT exists within a chain of decisions — data collection, pre-training, fine-tuning, deployment — each made by different actors at different times, with each actor believing that a legal document (a consent form, a license) can protect them from responsibility. This creates a temptation to locate responsibility elsewhere: model creators may assume the data comes without ethical baggage, and end-users may assume that a publicly available model has been vetted for their own use case. In the current fast-moving AI world, however, every actor in this chain shares the ethical responsibilities that arise. The parent who signed the consent form cannot control what the end user of a derived model does – instead, each actor in the chain can invite the next to approach the data and models with respect and care. 
+
+Risk 4 – Inequitable Benefit Distribution
+
+Like many NLP models in the past, BabyHuBERT was created by researchers based in the Global North. BabyHuBERT’s creators made a conscious choice to include under-represented communities – but this opened the path to injustice because (a) benefits from BabyHuBERT and its derivative models may not flow back to participants (or the communities they belong to), and (b) BabyHuBERT and its derivative models may benefit certain communities more than others. We strongly recommend to creators of derivative models that they reflect on who can use their derived model and who benefits from their derived model. We also invite users of derivative models to reflect on who may benefit from their own use.
+
+Risk 5 – Challenges to Indigenous Data Sovereignty
+
+The temporal consent gap highlighted the idea that participating families may not have fully foreseen what their data would enable. The present risk serves to highlight an analogue issue for under-represented communities, including indigenous peoples. The data used to create BabyHuBERT included data from such diverse communities; but none of BabyHuBERT’s creators belonged to any of those communities. Licensees should not assume that the model's release implies those communities' endorsement of downstream uses.
+
+Risk 6 – Erosion of trust with respect to researchers
+
+The audio recordings used to pre-train BabyHuBERT were not simply downloaded from a repository — they were collected by researchers who spent years building relationships of trust with communities, 
+navigating local ethical expectations, and securing the approvals that made participation possible. These relationships are fragile and ongoing. A downstream use of BabyHuBERT that a community finds objectionable can damage or destroy those relationships, with consequences for the original researchers' ability to continue their work, and also for others seeking to do similar research. Licensees should be aware that their own work (a fine-tuned model, a high-visibility application that draws public attention) carries consequences for other actors in the same environment. 
+
+Risk 7 – Algorithmic Bias
+
+BabyHuBERT was trained on a dataset in which 57% of recordings come from English-speaking, WEIRD (Western, Educated, Industrialized, Rich, Democratic) populations. Its representations may reflect skews in training data, leading to higher performance for some populations and/or languages. This could be compounded by skewed properties of additional data used to generate derivative Models.
+
+Attachment C
+
+Risk mitigation strategies
+
+This attachment describes requirements and recommendations for creators of derivatives, and not end users, that is, people who use models’ outputs only. 
+
+Part 1 — What you are required to do
+
+1. Join the mailing list and describe what you have created
+
+When you create a derivative, we ask you to:
+Have at least two co-authors or contributors of that outcome join the mailing list (darcle@googlegroups.com). If you are the sole author, identify someone who can join with you, to decrease the chances that you miss important information.
+Write a message to the mailing list with a description of what you have created, including #babyhubert in the subject line. Note that some derivatives may not be released as re-usable models, for example: BabyHuBERT features feeding a one-shot classifier on a single small dataset, or fine-tuned to a specific family’s recordings, or applied to a task where you see poor results. We ask you to inform the community of such derivatives regardless of whether you release the underlying code or weights. If you notify the community well before final stable publication (e.g. in a conference proceeding or journal), you will be able to integrate any feedback you get in replies to your message.
+By joining the mailing list, you can benefit from group wisdom; by sharing what you have done, you contribute to a digital log, which will make it easier for everyone to keep track of e.g. potential uses, and provide arguments and evidence regarding which uses could be harmful or inconsistent with this License. 
+
+2. Utilize the mailing list
+
+Pay attention to arguments and evidence brought forward in replies to your message. The community is diverse and they may not all agree. Use your best judgment when integrating their feedback.
+Consider searching the mailing list’s history for #babyhubert, to see if others have shared relevant information in the past.
+Monitor the list for updates, feedback, or safeguard recommendations. 
+Adopt recommended safeguards whenever relevant to your project.
+
+3. Report problems promptly
+
+Report to the mailing list (darcle@googlegroups.com) or its elected board — as soon as you become aware — any of the following:
+Unanticipated uses of BabyHuBERT or its derivatives
+Ethical concerns
+Misuse by third parties
+
+4. Inform users of your Derivative (applies to those releasing models)
+
+If you are releasing a derivative that may, in its stead, have derivatives, make sure to adapt the license or agreement governing your derivative to the conditions in the BabyHuBERT license (saliently paragraph 5 and Attachments A-C).
+If you are releasing a derivative intended purely for end-users, we invite you to mention ethical issues you consider relevant to your model.
+
+5. Adopt a reflexive, thoughtful and long-term approach to ethical issues
+
+Try to find relevant ethics training and hold discussions with mentors, peers, and supervisees, to increase the depth of your understanding of the ethical risks and proposed mitigation strategies. We invite you also to adapt extant ethics training to use it with your students, supervisees, and colleagues, as relevant.
+
+Part 2 — What you are encouraged to do
+
+Community engagement
+
+If your derivative focuses on a specific community (e.g., low-SES populations, neurodivergent individuals), consult relevant advocacy organisations as soon as possible.
+As relevant to the derivative you are developing, consider seeking input from former participants, community advisory boards, or community representatives (e.g., Tsimane advisory council, Timor-Leste representatives). At present, this recommendation doesn’t appear immediately actionable to us since there isn’t a list of contacts, and it may have negative effects - e.g., many people reaching out to the Tsimane advisory council and taking up their time, or talking to a specific representative of Timor Leste (e.g. an ambassador) who has no idea about the context of BabyHubert, thus causing a potential diplomatic conflict. Consider asking the mailing list for advice if uncertain. 
+If there is discussion on how to improve consent forms and explanatory materials — both for future data collection and for communicating past research to relevant communities – consider volunteering to help.
+If you are in a position to do so, join efforts to update Attachments A–C as the landscape of use cases and best practices evolves.
+
+Help address inequitable benefit sharing
+
+If you are based in or working with communities in the Global South, or affiliated with communities that contributed data, consider connecting with the Ethics Discussion Board to ask for resource-sharing, support, mentoring. 
+Regardless of where they are based, all licensees are invited to volunteer to help with resource-sharing, support, and mentoring.
+
+Technical safeguards
+
+If your derivative targets a demographic not well represented in BabyHuBERT's training data, consider retraining or fine-tuning with speech from that demographic
+Conduct privacy auditing: test whether BabyHuBERT or your derivative model is vulnerable to inference or reconstruction attacks, and document the results
+Reflect on whether your design choices (compute requirements, assumed acoustic environments, documentation language) inadvertently exclude the communities whose data made this model possible
+Questions about any of these obligations or recommendations can be directed to the Ethics Discussion Board via the mailing list (darcle@googlegroups.com).
+
