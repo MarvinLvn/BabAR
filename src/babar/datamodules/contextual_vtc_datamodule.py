@@ -15,7 +15,7 @@ logger = logging.getLogger("babar.datamodule")
 class ContextualVTCDataModule(LightningDataModule):
 
     def __init__(self, audio_path, rttm_path, context_duration=20.0,
-                 batch_size=32, num_workers=4, speaker_filter='KCHI', max_utt_dur=None):
+                 batch_size=32, num_workers=4, speaker_filter='KCHI', max_utt_dur=None, device="cpu"):
         super().__init__()
 
         self.audio_path = Path(audio_path)
@@ -26,7 +26,7 @@ class ContextualVTCDataModule(LightningDataModule):
         self.num_workers = num_workers
         self.speaker_filter = [speaker_filter] if isinstance(speaker_filter, str) else speaker_filter
         self.max_utt_dur = max_utt_dur
-
+        self.device = device
         self.sampling_rate = 16000
         self.processor = None
 
@@ -211,5 +211,5 @@ class ContextualVTCDataModule(LightningDataModule):
             batch_size=self.batch_size,
             num_workers=self.num_workers,
             collate_fn=self.collate_fn,
-            pin_memory=torch.cuda.is_available(),
+            pin_memory=str(self.device).startswith("cuda"),
         )

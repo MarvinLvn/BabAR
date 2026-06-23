@@ -108,6 +108,7 @@ def run_single(
         num_workers=num_workers,
         speaker_filter=speaker_filter,
         max_utt_dur=max_utt_dur,
+        device=device
     )
     datamodule.set_processor(model.processor)
     datamodule.setup()
