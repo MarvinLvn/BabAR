@@ -19,12 +19,14 @@ logger = logging.getLogger("babar.infer")
 def load_model(
     checkpoint_path: Path,
     vocab_phoneme_path: Optional[Path] = None,
+    device: str = "cpu",
 ) -> BaseModule:
     """Load BabAR model from a Lightning checkpoint.
 
     Args:
         checkpoint_path: Path to .ckpt file.
         vocab_phoneme_path: Path to phoneme vocabulary JSON.
+        device: Device to load the checkpoint's tensors onto.
 
     Returns:
         BaseModule in eval mode.
@@ -38,6 +40,7 @@ def load_model(
     logger.info(f"Loading BabAR model from {checkpoint_path}")
     model = BaseModule.load_from_checkpoint(
         str(checkpoint_path),
+        map_location=device,
         vocab_phoneme_path=vocab_phoneme_path,
         weights_only=False,
     )

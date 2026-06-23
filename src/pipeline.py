@@ -267,7 +267,7 @@ def run_pipeline(
         f"({len(rttm_files) - len(rttm_needing_babar)} already done, skipping)..."
     )
 
-    model = load_model(checkpoint, vocab_phoneme_path)
+    model = load_model(checkpoint, vocab_phoneme_path, device=device)
     model = model.to(device)
     if device != "cpu":
         model = model.half()
