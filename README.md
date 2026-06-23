@@ -34,7 +34,7 @@ BabAR preprint:
 
 ```bibtex
 @article{lavechin2026babar,
-  title={BabAR: from phoneme recognition to developmental measures of young children's speech production},
+  title={Bab{AR}: from phoneme recognition to developmental measures of young children's speech production},
   author={Lavechin, Marvin and Bergelson, Elika and Levy, Roger},
   journal={Interspeech},
   year={2026}
