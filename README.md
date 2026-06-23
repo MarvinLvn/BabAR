@@ -46,7 +46,7 @@ VTC 2.0 preprint:
 
 ```bibtex
 @article{charlot2025babyhubert,
-  title={BabyHuBERT: Multilingual Self-Supervised Learning for Segmenting Speakers in Child-Centered Long-Form Recordings},
+  title={BabyHu{BERT}: Multilingual Self-Supervised Learning for Segmenting Speakers in Child-Centered Long-Form Recordings},
   author={Charlot, Th{\'e}o and Kunze, Tarek and Poli, Maxime and Cristia, Alejandrina and Dupoux, Emmanuel and Lavechin, Marvin},
   journal={Interspeech},
   year={2026}
