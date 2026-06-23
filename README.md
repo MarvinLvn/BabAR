@@ -36,7 +36,7 @@ BabAR preprint:
 @article{lavechin2026babar,
   title={BabAR: from phoneme recognition to developmental measures of young children's speech production},
   author={Lavechin, Marvin and Bergelson, Elika and Levy, Roger},
-  journal={arXiv preprint arXiv:2603.05213},
+  journal={Interspeech},
   year={2026}
 }
 
@@ -45,15 +45,13 @@ BabAR preprint:
 VTC 2.0 preprint:
 
 ```bibtex
-@misc{charlot2025vtc2,
-    title={BabyHuBERT: Multilingual Self-Supervised Learning for Segmenting Speakers in Child-Centered Long-Form Recordings}, 
-    author={Théo Charlot and Tarek Kunze and Maxime Poli and Alejandrina Cristia and Emmanuel Dupoux and Marvin Lavechin},
-    year={2025},
-    eprint={2509.15001},
-    archivePrefix={arXiv},
-    primaryClass={eess.AS},
-    url={https://arxiv.org/abs/2509.15001}, 
+@article{charlot2025babyhubert,
+  title={BabyHuBERT: Multilingual Self-Supervised Learning for Segmenting Speakers in Child-Centered Long-Form Recordings},
+  author={Charlot, Th{\'e}o and Kunze, Tarek and Poli, Maxime and Cristia, Alejandrina and Dupoux, Emmanuel and Lavechin, Marvin},
+  journal={Interspeech},
+  year={2026}
 }
+
 ```
 
 ### Acknowledgments
