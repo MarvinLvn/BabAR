@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0] 2026-06-07
+**Commit** 
+
+### Changed
+
+Now use VTC 2.2 (that uses a sliding window at inference) slightly improving speech detection overall
+
 ## [1.2.0] - 2026-05-19
 **Commit:** `5ffed283994372aa2be1692b6241749e5a1e0c39`
 
