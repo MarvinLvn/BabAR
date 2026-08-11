@@ -43,6 +43,20 @@ logging.basicConfig(
 )
 logger = logging.getLogger("pipeline")
 
+def _check_not_lfs_pointer(path: Path):
+    """Raise a clear error if `path` is an unresolved Git LFS pointer stub."""
+    with open(path, "rb") as f:
+        head = f.read(200)
+    if head.startswith(b"version https://git-lfs.github.com/spec/v1"):
+        raise RuntimeError(
+            f"{path} is a Git LFS pointer file, not the actual model weights "
+            f"(git-lfs never downloaded the real file).\n"
+            f"Fix it by running:\n"
+            f"    brew install git-lfs   # (macOS) or: sudo apt install git-lfs (Linux)\n"
+            f"    git lfs install\n"
+            f"    cd {path.parent} && git lfs pull\n"
+            f"then rerun BabAR."
+        )
 
 def resolve_device(device: str) -> str:
     """Normalize device string and check availability."""
@@ -182,7 +196,9 @@ def run_pipeline(
         logger.error(f"No .wav files found in {wavs}")
         return
     _validate_wav_files(wav_files)
-
+    _check_not_lfs_pointer(checkpoint)
+    if its is None:
+        _check_not_lfs_pointer(REPO_ROOT / "VTC" / "VTC-2" / "model" / "best.ckpt")
     logger.info(f"Found {len(wav_files)} audio file(s). Device: {device}")
 
     # -- Step 1: ITS -> RTTM (LENA mode) or VTC (standard mode) -------------
