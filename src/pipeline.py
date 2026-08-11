@@ -48,7 +48,7 @@ def _check_not_lfs_pointer(path: Path):
         if f.read(200).startswith(b"version https://git-lfs.github.com/spec/v1"):
             raise RuntimeError(
                 f"{path} is a Git LFS pointer file, not the actual model weights.\n"
-                f"Run from the repo root:\n"
+                f"Run from BabAR repo:\n"
                 f"    git lfs install\n"
                 f"    git submodule update --init --recursive\n"
                 f"    git submodule foreach --recursive git lfs pull\n"
