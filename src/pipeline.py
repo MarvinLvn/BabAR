@@ -44,19 +44,16 @@ logging.basicConfig(
 logger = logging.getLogger("pipeline")
 
 def _check_not_lfs_pointer(path: Path):
-    """Raise a clear error if `path` is an unresolved Git LFS pointer stub."""
     with open(path, "rb") as f:
-        head = f.read(200)
-    if head.startswith(b"version https://git-lfs.github.com/spec/v1"):
-        raise RuntimeError(
-            f"{path} is a Git LFS pointer file, not the actual model weights "
-            f"(git-lfs never downloaded the real file).\n"
-            f"Fix it by running:\n"
-            f"    brew install git-lfs   # (macOS) or: sudo apt install git-lfs (Linux)\n"
-            f"    git lfs install\n"
-            f"    cd {path.parent} && git lfs pull\n"
-            f"then rerun BabAR."
-        )
+        if f.read(200).startswith(b"version https://git-lfs.github.com/spec/v1"):
+            raise RuntimeError(
+                f"{path} is a Git LFS pointer file, not the actual model weights.\n"
+                f"Run from the repo root:\n"
+                f"    git lfs install\n"
+                f"    git submodule update --init --recursive\n"
+                f"    git submodule foreach --recursive git lfs pull\n"
+                f"then rerun BabAR."
+            )
 
 def resolve_device(device: str) -> str:
     """Normalize device string and check availability."""
