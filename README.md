@@ -33,25 +33,29 @@ You can listen to some audio samples on the [project page](https://marvinlvn.git
 BabAR preprint:
 
 ```bibtex
-@article{lavechin2026babar,
-  title={Bab{AR}: from phoneme recognition to developmental measures of young children's speech production},
-  author={Lavechin, Marvin and Bergelson, Elika and Levy, Roger},
-  journal={Interspeech},
-  year={2026}
+@inproceedings{lavechin26_interspeech,
+  title     = {{BabAR: from phoneme recognition to developmental measures of young children's speech production}},
+  author    = {Marvin Lavechin and Elika Bergelson and Roger Levy},
+  year      = {2026},
+  booktitle = {{Interspeech 2026 [Long Track]}},
+  pages     = {4354--4363},
+  doi       = {10.21437/Interspeech.2026-1132},
+  issn      = {2958-1796},
 }
-
 ```
 
 VTC 2.0 preprint:
 
 ```bibtex
-@article{charlot2025babyhubert,
-  title={BabyHu{BERT}: Multilingual Self-Supervised Learning for Segmenting Speakers in Child-Centered Long-Form Recordings},
-  author={Charlot, Th{\'e}o and Kunze, Tarek and Poli, Maxime and Cristia, Alejandrina and Dupoux, Emmanuel and Lavechin, Marvin},
-  journal={Interspeech},
-  year={2026}
+@inproceedings{charlot26_interspeech,
+  title     = {{BabyHuBERT: Multilingual Self-Supervised Learning for Segmenting Speakers in Child-Centered Long-Form Recordings}},
+  author    = {Théo Charlot and Tarek Kunze and Maxime Poli and Alejandrina Cristia and Emmanuel Dupoux and Marvin Lavechin},
+  year      = {2026},
+  booktitle = {{Interspeech 2026}},
+  pages     = {4896--4901},
+  doi       = {10.21437/Interspeech.2026-2772},
+  issn      = {2958-1796},
 }
-
 ```
 
 ### Acknowledgments
