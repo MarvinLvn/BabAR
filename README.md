@@ -44,6 +44,8 @@ BabAR preprint:
 }
 ```
 
+Or in APA: Lavechin, M., Bergelson, E., Levy, R. (2026) BabAR: from phoneme recognition to developmental measures of young children's speech production. Proc. Interspeech 2026 [Long Track], 4354-4363, doi: 10.21437/Interspeech.2026-1132
+
 VTC 2.0 preprint:
 
 ```bibtex
@@ -57,6 +59,8 @@ VTC 2.0 preprint:
   issn      = {2958-1796},
 }
 ```
+
+or in APA: Charlot, T., Kunze, T., Poli, M., Cristia, A., Dupoux, E., Lavechin, M. (2026) BabyHuBERT: Multilingual Self-Supervised Learning for Segmenting Speakers in Child-Centered Long-Form Recordings. Proc. Interspeech 2026, 4896-4901, doi: 10.21437/Interspeech.2026-2772
 
 ### Acknowledgments
 
