@@ -116,7 +116,7 @@ Enriched CSV files are saved to `babar_my_dataset/phonemes_enriched/`. Each file
 | `n_canonical_syllables` | Number of syllables containing at least one consonant and one vowel |
 | `is_canonical` | `True` if `n_canonical_syllables > 0` |
 
-Syllabification uses the Sonority Sequencing Principle (Clements, 1990). No language-specific resources are required.
+Syllabification uses the Sonority Sequencing Principle (Clements, 1990). No language-specific resources are required. Syllable nuclei are vowels and syllabic nasals: a nasal is a nucleus when neither of its neighbours is a vowel (e.g. `m m` → `m|m`, `m m a` → `m|m a`, but `m a m` stays one syllable). Rows with an empty phonemes field count as one syllable (`n_syllables` = 1), since a vocalization was detected.
 
 ## 5. GPU memory tip
 

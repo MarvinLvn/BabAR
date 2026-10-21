@@ -104,9 +104,25 @@ def load_sonority_table(sonority_path: Path, vocab_path: Path) -> tuple[dict, di
     return sonority_table, type_table
 
 
+def is_nucleus(sonority: list[int], i: int) -> bool:
+    """
+    A vowel is always a syllable nucleus. A nasal is a nucleus (syllabic nasal)
+    when neither of its neighbours is a vowel, e.g. [m m] -> m|m, [m m a] -> m|m a,
+    while the nasals of [m a m] stay margins of the vowel's syllable.
+    """
+    if sonority[i] == 6:
+        return True
+    if sonority[i] == 3:
+        prev_vowel = i > 0 and sonority[i - 1] == 6
+        next_vowel = i + 1 < len(sonority) and sonority[i + 1] == 6
+        return not (prev_vowel or next_vowel)
+    return False
+
+
 def syllabify_ssp(phonemes: list[str], sonority_table: dict) -> list[list[str]]:
     """
     Syllabify a list of IPA phonemes using the Sonority Sequencing Principle.
+    Nuclei are vowels and syllabic nasals (see is_nucleus).
     Returns a list of syllables, each syllable being a list of phonemes.
     """
     if not phonemes:
@@ -115,7 +131,7 @@ def syllabify_ssp(phonemes: list[str], sonority_table: dict) -> list[list[str]]:
         return [phonemes]
 
     sonority = [sonority_table.get(p, 0) for p in phonemes]
-    nuclei = [i for i, s in enumerate(sonority) if s == 6]
+    nuclei = [i for i in range(len(phonemes)) if is_nucleus(sonority, i)]
 
     if not nuclei:
         return [phonemes]

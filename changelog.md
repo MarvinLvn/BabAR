@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+- Syllabification (`src/syllabify.py`): nasals with no adjacent vowel are now syllable nuclei (syllabic nasals), e.g. `m m` → `m|m` and `m m a` → `m|m a` instead of a single syllable. This matches how human annotators syllabify children's nasal sequences and increases the number of (non-canonical) syllables in vocalizations containing nasal runs.
+
 ## [1.3.0] 2026-06-07
 **Commit** 
 
