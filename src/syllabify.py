@@ -141,7 +141,9 @@ def syllabify_ssp(phonemes: list[str], sonority_table: dict) -> list[list[str]]:
     boundaries = [0]
     for n1, n2 in zip(nuclei, nuclei[1:]):
         between = list(range(n1 + 1, n2))
-        if not between:
+        # a syllabic nasal takes no onset: consonants before it close the previous syllable
+        # (u m m -> u m|m, not u|m m)
+        if not between or sonority[n2] == 3:
             boundaries.append(n2)
         else:
             min_pos = min(between, key=lambda i: sonority[i])
