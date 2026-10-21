@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.1] 2026-10-21
+**Commit:** `7907719d22754972bae06c1fc8982e700b441772`
+
+### Fixed
+- Syllabification (`src/syllabify.py`): a syllabic nasal no longer takes an onset; consonants between a vowel and a following syllabic nasal close the vowel's syllable, e.g. `u m m` → `u m|m` (was `u|m m`). This matches how human annotators syllabify these sequences. Syllable counts are unchanged.
+
 ## [1.4.0] 2026-10-21
 **Commit:** `34bb6427103e87584dbb408bce857f3b8547ed14`
 
