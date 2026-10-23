@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.2] 2026-10-23
+**Commit:** `8989a4c4e095f94ccdcbd88174a43928cc1169e5`
+
+### Fixed
+- Syllabification (`src/syllabify.py`): consonants of equal sonority between two vowels are now split between the two syllables, e.g. `b a n n a` → `b a n|n a` (was `b a|n n a`). This matches how human annotators syllabify these clusters. Syllable counts are unchanged; canonical syllable counts can increase slightly, since a vowel that gains a coda consonant forms a canonical syllable.
+
 ## [1.4.1] 2026-10-21
 **Commit:** `7907719d22754972bae06c1fc8982e700b441772`
 
