@@ -146,7 +146,9 @@ def syllabify_ssp(phonemes: list[str], sonority_table: dict) -> list[list[str]]:
         if not between or sonority[n2] == 3:
             boundaries.append(n2)
         else:
-            min_pos = min(between, key=lambda i: sonority[i])
+            # boundary before the least sonorous consonant; on ties, the last one, so that
+            # equal-sonority consonants split (b a n n a -> b a n|n a, not b a|n n a)
+            min_pos = min(reversed(between), key=lambda i: sonority[i])
             boundaries.append(min_pos)
     boundaries.append(len(phonemes))
 
